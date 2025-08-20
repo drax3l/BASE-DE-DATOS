@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bases de Datos SQL - Guía Completa</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Encabezado */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6b8a 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Navegación */
+        nav {
+            background-color: #3a506b;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+        
+        nav li {
+            padding: 1rem 0;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            background-color: #4a6b8a;
+            border-radius: 4px;
+        }
+        
+        /* Secciones */
+        section {
+            padding: 3rem 0;
+            background-color: white;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        section:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        section h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #4a6b8a;
+            font-size: 2rem;
+        }
+        
+        section h3 {
+            color: #3a506b;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        
+        section p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        /* Listas */
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Tarjetas de características */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #4a6b8a;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Tabla de comparación */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background-color: #3a506b;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        /* Código SQL */
+        .code-example {
+            background-color: #2d3a4b;
+            color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+        }
+        
+        .code-example .keyword {
+            color: #569cd6;
+        }
+        
+        .code-example .function {
+            color: #dcdcaa;
+        }
+        
+        .code-example .string {
+            color: #ce9178;
+        }
+        
+        /* Referencias */
+        .references {
+            list-style-type: none;
+            margin-left: 0;
+        }
+        
+        .references li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            text-indent: -1.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Bases de Datos SQL</h1>
+            <p>El pilar fundamental para el almacenamiento y gestión de información estructurada</p>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#introduccion">Introducción</a></li>
+            <li><a href="#definicion">Definición</a></li>
+            <li><a href="#caracteristicas">Características</a></li>
+            <li><a href="#casos-uso">Casos de Uso</a></li>
+            <li><a href="#limitaciones">Limitaciones</a></li>
+            <li><a href="#referencias">Referencias</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="introduccion">
+            <h2>Introducción a las Bases de Datos SQL</h2>
+            <p>Las bases de datos SQL, también conocidas como bases de datos relacionales, han sido durante mucho tiempo el pilar fundamental para el almacenamiento y la gestión de la información, especialmente antes de la era del Big Data.</p>
+            <p>Estos sistemas han permitido a organizaciones de todo el mundo almacenar, consultar y manipular datos de manera estructurada y eficiente, garantizando la integridad y consistencia de la información a lo largo del tiempo.</p>
+        </section>
+        
+        <section id="definicion">
+            <h2>Definición de SQL y Bases de Datos Relacionales</h2>
+            <p><strong>SQL (Structured Query Language)</strong> es un lenguaje de programación diseñado específicamente para administrar y recuperar información de sistemas de gestión de bases de datos relacionales (RDBMS).</p>
+            
+            <div class="code-example">
+                <span class="keyword">SELECT</span> nombre, email <span class="keyword">FROM</span> usuarios <span class="keyword">WHERE</span> pais = <span class="string">'España'</span>;
+            </div>
+            
+            <p>SQL es un lenguaje de alto nivel y declarativo que permite especificar qué se desea obtener, sin necesidad de detallar cómo conseguirlo. Esto se logra mediante el manejo del álgebra y el cálculo relacional, facilitando la consulta y modificación de datos.</p>
+            
+            <p>Fue pionero en el ámbito comercial para el modelo relacional de Edgar Frank Codd, propuesto en 1970. Se convirtió en el lenguaje de base de datos más usado y fue estandarizado por <strong>ANSI en 1986 y por ISO en 1987</strong>, con revisiones posteriores que han añadido nuevas características.</p>
+        </section>
+        
+        <section id="caracteristicas">
+            <h2>Características Clave de las Bases de Datos Relacionales</h2>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h3>Estructura Tabular</h3>
+                    <p>Las bases de datos relacionales organizan la información en tablas, que se componen de filas (registros o tuplas) y columnas (campos o atributos). Cada tabla está diseñada para almacenar un tipo específico de información, buscando evitar la repetición de datos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Modelo de Datos Relacional</h3>
+                    <p>Utilizan un modelo de datos basado en tablas y relaciones definidas entre ellas. Estas relaciones se establecen a menudo mediante el uso de "claves externas" que vinculan datos entre diferentes tablas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Garantía de Integridad (ACID)</h3>
+                    <p>Ofrecen herramientas robustas para garantizar la integridad y la consistencia de los datos a través de las propiedades ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad). Esto asegura que las transacciones se completen íntegramente o no se apliquen en absoluto.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Lenguaje de Consulta Estándar</h3>
+                    <p>Emplean SQL como su lenguaje de consulta estándar, el cual es simple y potente. Proporcionan utilidades para el acceso, manipulación, privacidad, auditoría y recuperación de datos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Independencia de Esquema</h3>
+                    <p>Garantizan la independencia entre el esquema lógico y físico de la base de datos, permitiendo cambios en la implementación sin afectar las aplicaciones que utilizan los datos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3>Escalabilidad Vertical</h3>
+                    <p>Generalmente, las bases de datos SQL escalan verticalmente, lo que implica aumentar los recursos de un único servidor (como RAM o CPU) para manejar mayores cargas de trabajo.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="casos-uso">
+            <h2>Casos de Uso Típicos de las Bases de Datos SQL</h2>
+            
+            <p>Desde la década de 1980, las bases de datos SQL han sido el modelo predominante para sistemas de información que gestionan datos simples y estructurados:</p>
+            
+            <ul>
+                <li><strong>Aplicaciones de banca:</strong> Donde la integridad de los datos y las transacciones es crítica.</li>
+                <li><strong>Sistemas de gestión de relaciones con clientes (CRM):</strong> Para almacenar y gestionar información estructurada de clientes.</li>
+                <li><strong>Planificación de recursos empresariales (ERP):</strong> Sistemas que requieren consistencia y relaciones complejas entre datos.</li>
+                <li><strong>Sistemas sanitarios y académicos:</strong> Donde la estructura de datos es bien definida y predecible.</li>
+                <li><strong>Comercio electrónico:</strong> Para gestionar catálogos de productos, inventarios y transacciones de venta.</li>
+            </ul>
+            
+            <p>Son la mejor opción cuando los datos son predecibles en tamaño, estructura y frecuencia de acceso, y cuando las relaciones entre entidades son cruciales para el análisis.</p>
+        </section>
+        
+        <section id="limitaciones">
+            <h2>Limitaciones frente a las necesidades del Big Data</h2>
+            
+            <p>Con la aparición de aplicaciones web de gran escala y el concepto de Big Data, las bases de datos relacionales mostraron ciertas limitaciones:</p>
+            
+            <table class="comparison-table">
+                <tr>
+                    <th>Limitación</th>
+                    <th>Descripción</th>
+                </tr>
+                <tr>
+                    <td>Cuellos de Botella</td>
+                    <td>Problemas en la gestión de log, control de concurrencia, protocolos de transacciones distribuidas y administración de buffers.</td>
+                </tr>
+                <tr>
+                    <td>Complejidad y Rendimiento</td>
+                    <td>Dificultad para manejar datos más complejos de aplicaciones web, redes sociales y servicios geoposicionados.</td>
+                </tr>
+                <tr>
+                    <td>Volumen y Variedad</td>
+                    <td>No diseñadas para manejar grandes volúmenes de datos estructurados, semiestructurados y no estructurados.</td>
+                </tr>
+                <tr>
+                    <td>Costos de Escalabilidad</td>
+                    <td>La escalabilidad vertical puede ser prohibitivamente costosa para grandes volúmenes de datos.</td>
+                </tr>
+                <tr>
+                    <td>Consultas Complejas y JOINs</td>
+                    <td>Rendimiento deficiente en conjuntos de datos muy grandes que requieren múltiples operaciones de JOINs complejos.</td>
+                </tr>
+            </table>
+            
+            <p>Debido a estas limitaciones, surgieron las bases de datos NoSQL para abordar las necesidades específicas del Big Data, aunque las bases de datos SQL siguen siendo la opción correcta cuando los datos son relacionales y se requiere un soporte transaccional estricto.</p>
+        </section>
+        
+        <section id="referencias">
+            <h2>Referencias</h2>
+            
+            <ul class="references">
+                <li>AWS. (n.d.). ¿Cuál es la diferencia entre las bases de datos relacionales y las no relacionales?. Amazon Web Services.</li>
+                <li>Castellón Chacolla, E. O. (2024). SQL y NoSQL aplicado a Big Data. Diferencias y tendencias de Big Data. Universidad para el Desarrollo y la Innovación (UDI).</li>
+                <li>Coursera Staff. (2024, 25 de abril). NoSQL vs SQL: Las diferencias + cuándo usar cada una. Coursera.</li>
+                <li>EDteam. (n.d.). ¿Cuándo usar SQL y cuándo NoSQL?. EDteam.</li>
+                <li>Innovise. (2024, 30 de enero). Tendencias en Big Data 2025: Navegando por el futuro de la tecnología de datos. Innovise.</li>
+                <li>La revolución de las bases de datos NoSQL en la gestión de Big Data. (n.d.).</li>
+                <li>sinia@minam. (n.d.). Seguridad en Base de Datos Corporativas. Ing. Armando Caballero Alvarado.</li>
+                <li>Wikipedia. (n.d.). NoSQL. Wikipedia, la enciclopedia libre.</li>
+                <li>Wikipedia. (n.d.). SQL. Wikipedia, la enciclopedia libre.</li>
+                <li>Zorrilla, M., & García-Saiz, D. (2017, enero). Bases de Datos NoSQL. Introducción. Universidad de Cantabria.</li>
+            </ul>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Página informativa sobre Bases de Datos SQL - Desarrollada con fines educativos</p>
+            <p>© 2024 - Basado en el documento "Las bases de datos SQL.pdf"</p>
+        </div>
+    </footer>
+</body>
+</html>
